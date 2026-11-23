@@ -2,7 +2,7 @@
 
 Landing page para una cafetería de especialidad **ficticia**, hecha como proyecto de portafolio.
 
-**Demo:** _(se completa al desplegar en Vercel)_
+**Demo:** https://nativa-cafe.vercel.app
 
 ## Qué incluye
 - Diseño responsive (mobile first) con menú hamburguesa accesible.
