@@ -96,6 +96,9 @@ h3 { font-size: 1.3rem; }
 .tab:hover { color: var(--roast); }
 .tab--active { color: var(--earth); border-bottom-color: var(--earth); }
 .menu-list { display: grid; gap: 1.6rem; }
+/* Al cambiar de pestaña la lista se vuelve a montar y los platos entran escalonados */
+.menu-item { animation: menu-in 0.32s ease-out both; animation-delay: calc(var(--i, 0) * 45ms); }
+@keyframes menu-in { from { opacity: 0; transform: translateY(8px); } }
 .menu-item__line { display: flex; align-items: baseline; gap: 0.6rem; }
 .menu-item h3 { font-size: 1.45rem; }
 .menu-item__dots { flex: 1; border-bottom: 2px dotted #c2b5a3; transform: translateY(-0.3em); min-width: 1.5rem; }
@@ -115,11 +118,13 @@ h3 { font-size: 1.3rem; }
 .fact dd { color: var(--muted); max-width: 46ch; }
 
 /* Reservas */
-.reserve { background: var(--yerba); color: var(--cal); }
+/* Fondo tierra; el verde yerba queda solo como acento (filete del título y borde de la tarjeta) */
+.reserve { background: var(--earth-deep); color: var(--cal); }
 .reservation { display: grid; grid-template-columns: 0.9fr 1.2fr; gap: 4rem; align-items: start; }
-.reservation__intro p { color: #d9e4d6; max-width: 38ch; margin-bottom: 1rem; }
-.reservation__intro .reservation__small { font-size: 0.92rem; color: #b9cbb6; }
-.form, .confirm { background: var(--cal); color: var(--roast); border-radius: 8px; padding: 2.2rem; display: grid; gap: 1.2rem; }
+.reservation__intro h2::after { content: ''; display: block; width: 3.5rem; height: 4px; margin-top: 1rem; border-radius: 2px; background: var(--lime); }
+.reservation__intro p { color: #f0d6ca; max-width: 38ch; margin-bottom: 1rem; }
+.reservation__intro .reservation__small { font-size: 0.92rem; color: #dcb9a9; }
+.form, .confirm { background: var(--cal); color: var(--roast); border-radius: 8px; border-top: 6px solid var(--yerba); padding: 2.2rem; display: grid; gap: 1.2rem; }
 .form label { display: grid; gap: 0.35rem; font-weight: 600; font-size: 0.95rem; }
 .form input, .form select { font: inherit; font-weight: 400; padding: 0.75rem 0.9rem; border: 1px solid #c9bdab; border-radius: 6px; background: #fff; color: var(--roast); min-height: 48px; }
 .form input:focus-visible, .form select:focus-visible { outline: 3px solid var(--yerba); outline-offset: 1px; border-color: var(--yerba); }
@@ -163,4 +168,5 @@ h3 { font-size: 1.3rem; }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .n-thread { stroke-dashoffset: 0; }
+  .menu-item { opacity: 1; transform: none; }
 }

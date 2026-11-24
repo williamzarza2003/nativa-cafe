@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type CSSProperties } from 'react'
 import { categories, formatGs, menu, type Category } from '../data/menu.ts'
 
 export default function Menu() {
@@ -28,9 +28,10 @@ export default function Menu() {
               </button>
             ))}
           </div>
-          <ul className="menu-list" role="tabpanel" id="menu-panel" aria-labelledby={`tab-${active}`}>
-            {items.map((item) => (
-              <li key={item.id} className="menu-item">
+          {/* key={active} vuelve a montar la lista para que la animación de entrada corra en cada cambio */}
+          <ul key={active} className="menu-list" role="tabpanel" id="menu-panel" aria-labelledby={`tab-${active}`}>
+            {items.map((item, i) => (
+              <li key={item.id} className="menu-item" style={{ '--i': i } as CSSProperties}>
                 <div className="menu-item__line">
                   <h3>{item.name}</h3>
                   <span className="menu-item__dots" aria-hidden="true" />
