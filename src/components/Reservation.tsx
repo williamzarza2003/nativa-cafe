@@ -2,7 +2,8 @@ import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'r
 import { validateReservation, type ReservationData, type ReservationErrors } from '../lib/validateReservation.ts'
 import Nanduti from './Nanduti.tsx'
 
-const WEBHOOK = import.meta.env.VITE_RESERVAS_WEBHOOK as string | undefined
+// Función serverless de Vercel (api/reservas.ts): avisa por Telegram y reenvía a n8n si está prendido
+const API_RESERVAS = '/api/reservas'
 const WHATSAPP = '595981000000' // número ficticio de la demo
 const MIN_PERSONAS = 1
 const MAX_PERSONAS = 10
@@ -36,6 +37,7 @@ export default function Reservation() {
   const [sent, setSent] = useState<ReservationData | null>(null)
   const [sending, setSending] = useState(false)
   const [sendError, setSendError] = useState(false)
+  const [empresa, setEmpresa] = useState('') // campo trampa para bots, invisible para personas
   const confirmRef = useRef<HTMLDivElement>(null)
 
   // Al confirmar, la tarjeta reemplaza al formulario: llevamos la vista y el foco ahí
@@ -66,21 +68,25 @@ export default function Reservation() {
       return
     }
 
-    // Sin webhook configurado, el formulario queda en modo demo.
-    if (!WEBHOOK) {
-      setSent(data)
-      setData(initial)
-      return
-    }
-
     setSending(true)
     setSendError(false)
     try {
-      const res = await fetch(WEBHOOK, {
+      const res = await fetch(API_RESERVAS, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, empresa }),
+        signal: AbortSignal.timeout(15_000),
       })
+      if (res.status === 422) {
+        // El servidor valida con las mismas reglas: si algo no pasa, se marca el campo
+        const { campos } = (await res.json()) as { campos?: ReservationErrors }
+        if (campos && Object.keys(campos).length) {
+          setErrors(campos)
+          const primero = (['name', 'email', 'date', 'time', 'people'] as const).find((k) => campos[k])
+          document.getElementById(`campo-${primero}`)?.focus()
+          return
+        }
+      }
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       setSent(data)
       setData(initial)
@@ -125,11 +131,14 @@ export default function Reservation() {
               {sent.people === 1 ? 'para vos solo' : <>para <strong>{sent.people} personas</strong></>}.
               Te escribimos a {sent.email} para confirmar.
             </p>
-            {!WEBHOOK && <p className="note">Demo: el formulario no envía datos reales.</p>}
             <button className="btn btn--outline" onClick={() => setSent(null)}>Hacer otra reserva</button>
           </div>
         ) : (
           <form className="form" onSubmit={submit} noValidate>
+            <label className="trampa" aria-hidden="true">
+              Empresa
+              <input name="empresa" tabIndex={-1} autoComplete="off" value={empresa} onChange={(e) => setEmpresa(e.target.value)} />
+            </label>
             <label>
               Nombre y apellido
               <input name="name" value={data.name} onChange={update} autoComplete="name" {...field('name')} />

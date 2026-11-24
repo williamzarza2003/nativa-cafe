@@ -123,13 +123,27 @@ h3 { font-size: 1.3rem; }
 
 /* Del grano a la taza */
 .proceso { background: var(--roast); color: var(--cal); }
-.proceso h2 { margin-bottom: 3rem; }
-.pasos { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
-.paso .foto { aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; }
-.paso__texto { position: relative; padding-top: 1.25rem; }
-.paso__numero { display: block; font: 400 4rem/1 var(--font-display); color: var(--sun); margin: -2.6rem 0 .5rem 1rem; position: relative; }
-.paso h3 { font-size: 1.6rem; margin-bottom: .4rem; }
-.paso p { color: #d8cbbf; max-width: 36ch; }
+/* Una foto grande que cambia con el paso elegido; los pasos al costado */
+.proceso__grilla { display: grid; grid-template-columns: minmax(0, 11fr) minmax(0, 10fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: center; }
+.proceso__fotos { position: relative; aspect-ratio: 4 / 5; border-radius: 4px; overflow: hidden; background: #3a2820; }
+.proceso__foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity .6s ease, transform 1.2s ease; }
+.proceso__foto--activa { opacity: 1; transform: none; }
+.proceso__dato { position: absolute; left: 1rem; bottom: 1rem; margin: 0; padding: .45rem .8rem; background: var(--sun); color: var(--roast); font-weight: 700; font-size: .9rem; border-radius: 2px; }
+.proceso h2 { margin-bottom: .75rem; }
+.proceso__bajada { color: #d8cbbf; margin-bottom: 2rem; }
+.pasos { list-style: none; margin: 0; padding: 0; display: grid; border-top: 1px solid #4a3830; }
+.paso { border-bottom: 1px solid #4a3830; }
+.paso__boton { all: unset; box-sizing: border-box; width: 100%; cursor: pointer; display: grid; grid-template-columns: 3.5rem minmax(0, 1fr); gap: 1rem; padding: 1.5rem 0 1.5rem 1.25rem; position: relative; }
+/* La barra de sol marca el paso activo */
+.paso__boton::before { content: ''; position: absolute; left: 0; top: 1.5rem; bottom: 1.5rem; width: 3px; background: var(--sun); transform: scaleY(0); transform-origin: top; transition: transform .35s ease; }
+.paso--activo .paso__boton::before { transform: scaleY(1); }
+.paso__boton:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.paso__numero { font: 400 3rem/1 var(--font-display); color: #7d6a5e; transition: color .3s; }
+.paso--activo .paso__numero { color: var(--sun); }
+.paso__cuerpo { display: grid; gap: .35rem; }
+.paso__titulo { font: 400 1.6rem/1.15 var(--font-display); color: var(--cal); }
+.paso__detalle { color: #c9baad; max-width: 42ch; line-height: 1.55; transition: color .3s; }
+.paso--activo .paso__detalle { color: #e8ddd2; }
 
 /* Nosotros */
 .about { background: #ece5d8; }
@@ -229,9 +243,13 @@ h3 { font-size: 1.3rem; }
   .pizarra .tabs { position: static; flex-direction: row; border-left: 0; border-bottom: 1px solid var(--line); gap: 0 1.4rem; }
   .pizarra .tab { padding: .7rem 0; margin: 0 0 -1px; border-left: 0; border-bottom: 3px solid transparent; font-size: 1rem; }
   .pizarra .tab--active { border-bottom-color: var(--earth); }
-  .pasos { grid-template-columns: minmax(0, 1fr); gap: 3rem; }
-  .paso { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1fr); gap: 1.25rem; align-items: end; }
-  .paso__numero { margin: 0 0 .3rem; }
+  /* En una columna: título, la foto y debajo los pasos, así al tocar un paso la foto queda a la vista */
+  .proceso__grilla { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .proceso__texto { display: contents; }
+  .proceso h2 { order: 1; }
+  .proceso__bajada { order: 2; margin-bottom: 1.5rem; }
+  .proceso__fotos { order: 3; aspect-ratio: 4 / 3; margin-bottom: 1.5rem; }
+  .pasos { order: 4; }
   .footer__grid { grid-template-columns: minmax(0, 1fr); gap: 1.8rem; }
 }
 @media (max-width: 720px) {
@@ -250,9 +268,10 @@ h3 { font-size: 1.3rem; }
   .destacado__precio { order: 2; }
   .destacado p { order: 3; }
   .destacado h3 { font-size: 1.35rem; }
-  .paso { grid-template-columns: minmax(0, .75fr) minmax(0, 1fr); align-items: start; }
-  .paso__numero { font-size: 3rem; }
-  .paso h3 { font-size: 1.3rem; }
+  .paso__boton { grid-template-columns: 2.4rem minmax(0, 1fr); gap: .75rem; padding: 1.1rem 0 1.1rem 1rem; }
+  .paso__boton::before { top: 1.1rem; bottom: 1.1rem; }
+  .paso__numero { font-size: 2.2rem; }
+  .paso__titulo { font-size: 1.3rem; }
   .menu__intro { margin-bottom: 2rem; }
   .form .btn { justify-self: stretch; text-align: center; }
   .section { padding-block: 4.5rem; }
@@ -263,3 +282,6 @@ h3 { font-size: 1.3rem; }
   .n-thread { stroke-dashoffset: 0; }
   .menu-item { opacity: 1; transform: none; }
 }
+
+/* Campo trampa del formulario de reservas: fuera de la vista y del lector de pantalla */
+.trampa { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
