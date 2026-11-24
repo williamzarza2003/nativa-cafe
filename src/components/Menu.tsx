@@ -1,5 +1,13 @@
 import { useState, type CSSProperties } from 'react'
 import { categories, formatGs, menu, type Category } from '../data/menu.ts'
+import Foto from './Foto.tsx'
+
+// Los tres que más salen; el resto de la carta sigue en formato pizarra
+const destacados = [
+  { id: 8, foto: 'chipa', alt: 'Chipas doradas recién horneadas en un plato, junto a un café' },
+  { id: 14, foto: 'terere', alt: 'Guampa de tereré con la bombilla de metal' },
+  { id: 2, foto: 'flatwhite', alt: 'Flat white con arte latte en una taza blanca sobre madera' },
+]
 
 export default function Menu() {
   const [active, setActive] = useState<Category>('cafe')
@@ -7,12 +15,29 @@ export default function Menu() {
 
   return (
     <section id="menu" className="section menu">
-      <div className="container menu__layout">
-        <div className="menu__head">
+      <div className="container">
+        <header className="menu__intro">
           <h2>La carta</h2>
           <p>Precios en guaraníes. El café de filtro cambia cada semana según el lote que tostamos.</p>
-        </div>
-        <div>
+        </header>
+
+        <ul className="destacados" aria-label="Los más pedidos">
+          {destacados.map((d) => {
+            const item = menu.find((m) => m.id === d.id)!
+            return (
+              <li key={d.id} className="destacado">
+                <Foto nombre={d.foto} alt={d.alt} ancho={640} alto={800} sizes="(max-width: 720px) 80vw, 30vw" />
+                <div className="destacado__texto">
+                  <h3>{item.name}</h3>
+                  <span className="destacado__precio">{formatGs(item.price)}</span>
+                  <p>{item.description}{item.tag && <> {item.tag}</>}</p>
+                </div>
+              </li>
+            )
+          })}
+        </ul>
+
+        <div className="pizarra">
           <div className="tabs" role="tablist" aria-label="Categorías de la carta">
             {categories.map((c) => (
               <button
