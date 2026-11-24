@@ -1,6 +1,8 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { validateReservation, type ReservationData, type ReservationErrors } from '../lib/validateReservation.ts'
 
+const WEBHOOK = import.meta.env.VITE_RESERVAS_WEBHOOK as string | undefined
+
 const initial: ReservationData = { name: '', email: '', date: '', time: '', people: 2 }
 
 function todayISO(): string {
@@ -13,6 +15,8 @@ export default function Reservation() {
   const [data, setData] = useState<ReservationData>(initial)
   const [errors, setErrors] = useState<ReservationErrors>({})
   const [sent, setSent] = useState<ReservationData | null>(null)
+  const [sending, setSending] = useState(false)
+  const [sendError, setSendError] = useState('')
 
   function update(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     const { name, value } = e.target
@@ -20,13 +24,34 @@ export default function Reservation() {
     setErrors((prev) => ({ ...prev, [name]: undefined }))
   }
 
-  function submit(e: FormEvent<HTMLFormElement>) {
+  async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const result = validateReservation(data)
     setErrors(result)
-    if (Object.keys(result).length === 0) {
+    if (Object.keys(result).length > 0) return
+
+    // Sin webhook configurado, el formulario queda en modo demo.
+    if (!WEBHOOK) {
       setSent(data)
       setData(initial)
+      return
+    }
+
+    setSending(true)
+    setSendError('')
+    try {
+      const res = await fetch(WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      setSent(data)
+      setData(initial)
+    } catch {
+      setSendError('No pudimos enviar la reserva. Probá de nuevo en unos minutos o escribinos por WhatsApp.')
+    } finally {
+      setSending(false)
     }
   }
 
@@ -55,7 +80,7 @@ export default function Reservation() {
               {sent.people === 1 ? 'persona' : 'personas'} el <strong>{sent.date}</strong> a las{' '}
               <strong>{sent.time}</strong>. Te escribimos a {sent.email}.
             </p>
-            <p className="note">Demo: el formulario no envía datos reales.</p>
+            {!WEBHOOK && <p className="note">Demo: el formulario no envía datos reales.</p>}
             <button className="btn btn--ghost" onClick={() => setSent(null)}>Hacer otra reserva</button>
           </div>
         ) : (
@@ -91,7 +116,10 @@ export default function Reservation() {
                 {errors.people && <span id="people-error" className="error">{errors.people}</span>}
               </label>
             </div>
-            <button type="submit" className="btn">Confirmar reserva</button>
+            {sendError && <p className="error" role="alert">{sendError}</p>}
+            <button type="submit" className="btn" disabled={sending}>
+              {sending ? 'Enviando…' : 'Confirmar reserva'}
+            </button>
           </form>
         )}
       </div>
