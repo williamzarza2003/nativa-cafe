@@ -61,27 +61,27 @@ export default function Reservation() {
   })
 
   return (
-    <section id="reservas" className="section">
+    <section id="reservas" className="section reserve">
       <div className="container reservation">
-        <div>
-          <p className="eyebrow">Reservas</p>
-          <h2>Guardamos tu mesa.</h2>
+        <div className="reservation__intro">
+          <h2>Reservá tu mesa</h2>
           <p>
-            Reservá con anticipación para grupos o para asegurarte un lugar en la terraza.
-            Te confirmamos por email.
+            Para grupos o para asegurarte un lugar en la galería los fines de semana.
+            Te confirmamos por email el mismo día.
           </p>
+          <p className="reservation__small">Grupos de más de 10 personas: escribinos a hola@nativacafe.example.</p>
         </div>
 
         {sent ? (
           <div className="confirm" role="status">
-            <h3>¡Listo, {sent.name.split(' ')[0]}!</h3>
+            <h3>Mesa reservada, {sent.name.split(' ')[0]}.</h3>
             <p>
               Recibimos tu reserva para <strong>{sent.people}</strong>{' '}
               {sent.people === 1 ? 'persona' : 'personas'} el <strong>{sent.date}</strong> a las{' '}
               <strong>{sent.time}</strong>. Te escribimos a {sent.email}.
             </p>
             {!WEBHOOK && <p className="note">Demo: el formulario no envía datos reales.</p>}
-            <button className="btn btn--ghost" onClick={() => setSent(null)}>Hacer otra reserva</button>
+            <button className="btn btn--outline" onClick={() => setSent(null)}>Hacer otra reserva</button>
           </div>
         ) : (
           <form className="form" onSubmit={submit} noValidate>
@@ -117,8 +117,8 @@ export default function Reservation() {
               </label>
             </div>
             {sendError && <p className="error" role="alert">{sendError}</p>}
-            <button type="submit" className="btn" disabled={sending}>
-              {sending ? 'Enviando…' : 'Confirmar reserva'}
+            <button type="submit" className="btn btn--sun" disabled={sending}>
+              {sending ? 'Enviando reserva…' : 'Reservar mesa'}
             </button>
           </form>
         )}

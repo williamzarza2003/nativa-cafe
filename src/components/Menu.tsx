@@ -6,35 +6,44 @@ export default function Menu() {
   const items = menu.filter((item) => item.category === active)
 
   return (
-    <section id="menu" className="section">
-      <div className="container">
-        <p className="eyebrow">Nuestra carta</p>
-        <h2>Menú</h2>
-        <div className="tabs" role="tablist" aria-label="Categorías del menú">
-          {categories.map((c) => (
-            <button
-              key={c.id}
-              role="tab"
-              aria-selected={active === c.id}
-              className={active === c.id ? 'tab tab--active' : 'tab'}
-              onClick={() => setActive(c.id)}
-            >
-              {c.label}
-            </button>
-          ))}
+    <section id="menu" className="section menu">
+      <div className="container menu__layout">
+        <div className="menu__head">
+          <h2>La carta</h2>
+          <p>Precios en guaraníes. El café de filtro cambia cada semana según el lote que tostamos.</p>
         </div>
-        <ul className="menu-grid" role="tabpanel">
-          {items.map((item) => (
-            <li key={item.id} className="menu-card">
-              <div className="menu-card__top">
-                <h3>{item.name}</h3>
-                <span className="price">{formatGs(item.price)}</span>
-              </div>
-              <p>{item.description}</p>
-              {item.tag && <span className="badge">{item.tag}</span>}
-            </li>
-          ))}
-        </ul>
+        <div>
+          <div className="tabs" role="tablist" aria-label="Categorías de la carta">
+            {categories.map((c) => (
+              <button
+                key={c.id}
+                role="tab"
+                id={`tab-${c.id}`}
+                aria-selected={active === c.id}
+                aria-controls="menu-panel"
+                className={active === c.id ? 'tab tab--active' : 'tab'}
+                onClick={() => setActive(c.id)}
+              >
+                {c.label}
+              </button>
+            ))}
+          </div>
+          <ul className="menu-list" role="tabpanel" id="menu-panel" aria-labelledby={`tab-${active}`}>
+            {items.map((item) => (
+              <li key={item.id} className="menu-item">
+                <div className="menu-item__line">
+                  <h3>{item.name}</h3>
+                  <span className="menu-item__dots" aria-hidden="true" />
+                  <span className="menu-item__price">{formatGs(item.price)}</span>
+                </div>
+                <p>
+                  {item.description}
+                  {item.tag && <span className="menu-item__tag"> {item.tag}</span>}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   )

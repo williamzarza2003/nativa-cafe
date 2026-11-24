@@ -1,34 +1,28 @@
+import Nanduti from './Nanduti.tsx'
+
 export default function Hero() {
   return (
     <section id="inicio" className="hero">
-      <div className="container hero__inner">
-        <p className="eyebrow">Café de especialidad · Pastelería artesanal</p>
-        <h1>
-          Tu pausa del día,
-          <br />
-          <em>bien hecha.</em>
-        </h1>
-        <p className="hero__lead">
-          Granos de origen tostados cada semana, chipa recién horneada y un brunch sin apuro.
-          Vení a trabajar, a charlar o simplemente a desconectar.
-        </p>
-        <div className="hero__actions">
-          <a href="#reservas" className="btn">Reservar mesa</a>
-          <a href="#menu" className="btn btn--ghost">Ver menú</a>
+      <div className="container hero__grid">
+        <div className="hero__text">
+          <h1>Café de especialidad, tostado acá en Ciudad del Este.</h1>
+          <p className="hero__lead">
+            Granos de pequeños productores, chipa que sale del horno a las siete
+            y tereré con yuyos cuando aprieta el calor.
+          </p>
+          <div className="hero__actions">
+            <a href="#reservas" className="btn btn--sun">Reservar mesa</a>
+            <a href="#menu" className="link-light">Ver la carta</a>
+          </div>
         </div>
-        <ul className="hero__facts">
-          <li><strong>07–20 h</strong> todos los días</li>
-          <li><strong>Wi-Fi</strong> y enchufes en cada mesa</li>
-          <li><strong>Pet friendly</strong> en la terraza</li>
-        </ul>
+        <Nanduti className="hero__nanduti" />
       </div>
-      <div className="hero__cup" aria-hidden="true">
-        <div className="cup">
-          <div className="cup__steam" />
-          <div className="cup__body" />
-          <div className="cup__handle" />
-          <div className="cup__plate" />
-        </div>
+      <div className="hero__info">
+        <ul className="container">
+          <li><strong>Todos los días</strong> de 7 a 20 h</li>
+          <li><strong>Av. Ficticia 1234</strong>, Centro</li>
+          <li><strong>Wi-Fi y enchufes</strong> en cada mesa</li>
+        </ul>
       </div>
     </section>
   )

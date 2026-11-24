@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const links = [
-  { href: '#menu', label: 'Menú' },
+  { href: '#menu', label: 'Carta' },
   { href: '#nosotros', label: 'Nosotros' },
   { href: '#reservas', label: 'Reservas' },
   { href: '#visitanos', label: 'Visitanos' },
@@ -14,8 +14,8 @@ export default function Header() {
     <header className="header">
       <div className="container header__inner">
         <a href="#inicio" className="logo" aria-label="Nativa Café, inicio">
-          <img src="/favicon.svg" alt="" width={32} height={32} />
-          <span>Nativa Café</span>
+          <img src="/favicon.svg" alt="" width={30} height={30} />
+          <span>Nativa</span>
         </a>
         <button
           className="menu-toggle"
@@ -32,7 +32,7 @@ export default function Header() {
               {l.label}
             </a>
           ))}
-          <a href="#reservas" className="btn btn--small" onClick={() => setOpen(false)}>
+          <a href="#reservas" className="btn btn--small btn--earth" onClick={() => setOpen(false)}>
             Reservar
           </a>
         </nav>
