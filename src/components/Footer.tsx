@@ -16,8 +16,8 @@ export default function Footer() {
           </div>
           <div>
             <h2 className="footer__titulo">Cuándo</h2>
-            <p>Lunes a viernes, 7 a 20 h</p>
-            <p>Sábados 8 a 20 h · Domingos 8 a 14 h</p>
+            <p>Todos los días, de 7 a 20 h</p>
+            <p>Feriados incluidos</p>
           </div>
           <div>
             <h2 className="footer__titulo">Hablemos</h2>

@@ -1,7 +1,7 @@
 const horarios = [
-  { dias: 'Lunes a viernes', horas: '07:00 a 20:00' },
-  { dias: 'Sábados', horas: '08:00 a 20:00' },
-  { dias: 'Domingos y feriados', horas: '08:00 a 14:00' },
+  { dias: 'Todos los días', horas: '07:00 a 20:00' },
+  { dias: 'Chipa caliente', horas: 'cada media hora' },
+  { dias: 'Café recién tostado', horas: 'desde el martes' },
 ]
 
 // Centro de Ciudad del Este (ubicación aproximada para la demo)
@@ -22,7 +22,7 @@ export default function Visitanos() {
           <p className="visitanos__ayuda">En pleno microcentro, a media cuadra de la avenida San Blas. Hay estacionamiento en la cuadra y bicicletero en la vereda.</p>
 
           <table className="horarios">
-            <caption className="sr-only">Horarios de atención</caption>
+            <caption className="sr-only">Horarios de atención y del horno</caption>
             <tbody>
               {horarios.map((h) => (
                 <tr key={h.dias}>
