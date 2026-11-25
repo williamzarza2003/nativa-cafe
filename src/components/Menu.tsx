@@ -2,11 +2,11 @@ import { useState, type CSSProperties } from 'react'
 import { categories, formatGs, menu, type Category } from '../data/menu.ts'
 import Foto from './Foto.tsx'
 
-// Los tres que más salen; el resto de la carta sigue en formato pizarra
-const destacados = [
-  { id: 8, foto: 'chipa', alt: 'Chipas doradas recién horneadas en un plato, junto a un café' },
-  { id: 14, foto: 'terere', alt: 'Guampa de tereré con la bombilla de metal' },
-  { id: 2, foto: 'flatwhite', alt: 'Flat white con arte latte en una taza blanca sobre madera' },
+// La merienda paraguaya: los tres que más salen. El resto de la carta sigue en formato pizarra.
+const destacados: { id: number; foto: string; alt: string; nota?: string }[] = [
+  { id: 8, foto: 'chipa', alt: 'Dos chipas en rosca y una chipa alargada en un plato de cerámica, junto a una taza' },
+  { id: 30, foto: 'mbeju', alt: 'Mbeju tostado en un plato de cerámica, con una taza de cocido adelante' },
+  { id: 20, foto: 'cocido', alt: 'Una brasa apoyada sobre yerba y azúcar en un plato hondo: así se quema el cocido', nota: 'Así se quema: brasa sobre yerba y azúcar' },
 ]
 
 export default function Menu() {
@@ -18,7 +18,7 @@ export default function Menu() {
       <div className="container">
         <header className="menu__intro">
           <h2>La carta</h2>
-          <p>Precios en guaraníes. El café de filtro cambia cada semana según el lote que tostamos.</p>
+          <p>Precios en guaraníes. De mañana, café de especialidad; a la tarde, la merienda de siempre. El café de filtro cambia cada semana según el lote que tostamos.</p>
         </header>
 
         <ul className="destacados" aria-label="Los más pedidos">
@@ -26,7 +26,10 @@ export default function Menu() {
             const item = menu.find((m) => m.id === d.id)!
             return (
               <li key={d.id} className="destacado">
-                <Foto nombre={d.foto} alt={d.alt} ancho={640} alto={800} sizes="(max-width: 720px) 80vw, 30vw" />
+                <div className="destacado__foto">
+                  <Foto nombre={d.foto} alt={d.alt} ancho={640} alto={800} sizes="(max-width: 720px) 45vw, 30vw" />
+                  {d.nota && <p className="destacado__nota">{d.nota}</p>}
+                </div>
                 <div className="destacado__texto">
                   <h3>{item.name}</h3>
                   <span className="destacado__precio">{formatGs(item.price)}</span>

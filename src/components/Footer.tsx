@@ -5,7 +5,7 @@ export default function Footer() {
         <div className="footer__marca">
           <img src="/favicon.svg" alt="" width={56} height={56} loading="lazy" />
           <p className="footer__nombre">Nativa</p>
-          <p className="footer__lema">Café de especialidad, chipa y tereré en el centro de Ciudad del Este.</p>
+          <p className="footer__lema">Café de especialidad, chipa y cocido quemado en el centro de Ciudad del Este.</p>
         </div>
 
         <div className="footer__grid">
@@ -31,7 +31,7 @@ export default function Footer() {
           <p>
             Diseño y desarrollo de{' '}
             <a href="https://github.com/williamzarza2003" target="_blank" rel="noreferrer">William Zarza</a>.
-            Las reservas llegan por n8n a Telegram. Fotos de Unsplash.
+            Las reservas llegan por n8n a Telegram. Fotos de Unsplash y Wikimedia Commons.
           </p>
         </div>
       </div>

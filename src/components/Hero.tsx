@@ -8,7 +8,7 @@ export default function Hero() {
           <h1>Café de especialidad, tostado acá en Ciudad del Este.</h1>
           <p className="hero__lead">
             Granos de pequeños productores, chipa que sale del horno a las siete
-            y tereré con yuyos cuando aprieta el calor.
+            y cocido quemado con mbeju para la merienda.
           </p>
           <div className="hero__actions">
             <a href="#reservas" className="btn btn--sun">Reservar mesa</a>

@@ -1,6 +1,7 @@
 const horarios = [
   { dias: 'Todos los días', horas: '07:00 a 20:00' },
   { dias: 'Chipa caliente', horas: 'cada media hora' },
+  { dias: 'Merienda: cocido y mbeju', horas: '15:00 a 19:00' },
   { dias: 'Café recién tostado', horas: 'desde el martes' },
 ]
 

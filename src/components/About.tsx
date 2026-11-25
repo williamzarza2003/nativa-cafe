@@ -1,9 +1,9 @@
 import Foto from './Foto.tsx'
 
 const facts = [
-  { title: 'Horno desde las seis', text: 'Chipa con queso Paraguay, medialunas y pan de masa madre, todo hecho acá.' },
+  { title: 'Horno desde las seis', text: 'Chipa en rosca, sopa paraguaya y chipa guasu, con queso Paraguay de una quesería de Hernandarias.' },
   { title: 'Mesas para quedarse', text: 'Buena luz, enchufes y Wi-Fi rápido. Nadie te apura si pediste un solo café.' },
-  { title: 'Tereré a toda hora', text: 'Yuyos frescos del mercado cada mañana y hielo de sobra cuando aprieta el calor.' },
+  { title: '¿Trajiste tu termo?', text: 'El tereré es tuyo y de tu ronda: nosotros te cargamos el termo con hielo, sin cobrarte nada.' },
 ]
 
 export default function About() {

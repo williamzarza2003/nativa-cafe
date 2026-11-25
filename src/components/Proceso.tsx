@@ -5,7 +5,7 @@ import Foto from './Foto.tsx'
 const pasos = [
   {
     titulo: 'Origen',
-    texto: 'Compramos lotes chicos a productores de Brasil y Colombia que conocemos por nombre. Probamos cada muestra antes de traerla.',
+    texto: 'Compramos lotes chicos a productores de Amambay y del sur de Minas Gerais que conocemos por nombre. Probamos cada muestra antes de traerla.',
     dato: 'Lotes de 60 kg',
     foto: 'origen',
     alt: 'Ramas de cafeto con frutos verdes y rojos',
