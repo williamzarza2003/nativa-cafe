@@ -2,3 +2,10 @@ node_modules
 dist
 *.local
 .vercel
+
+# Graphify (mapa local del código para Claude Code)
+graphify-out/
+.claude/settings.local.json
+
+# Originales de las fotos (se bajan de Commons, ver README)
+fuentes-fotos/
