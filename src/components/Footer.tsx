@@ -31,7 +31,7 @@ export default function Footer() {
           <p>
             Diseño y desarrollo de{' '}
             <a href="https://github.com/williamzarza2003" target="_blank" rel="noreferrer">William Zarza</a>.
-            Las reservas llegan por n8n a Telegram. Fotos de Unsplash y Wikimedia Commons.
+            Las reservas llegan a Telegram con una función de Vercel. Fotos de Unsplash y Wikimedia Commons.
           </p>
         </div>
       </div>
